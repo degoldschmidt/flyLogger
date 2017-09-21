@@ -1,7 +1,34 @@
+attrs = [   "stock_id",
+            "stock_name",
+            "owner",
+            "source",
+            "added",
+            "chr_1",
+            "chr_2",
+            "chr_3",
+            "state",
+            "comments"]
+
+descr = [
+            ("Lab index of stock", "(example: '0001')"),
+            ("Name of stock", "(example: 'nsyb-Gal4')"),
+            ("Owner of stock", "(example: 'Steve')"),
+            ("Source of stock", "(example: 'Bloomington Drosophila Stock Center')"),
+            ("Date stock was added to collection", ""),
+            ("First chromosome", ""),
+            ("Second chromosome", ""),
+            ("Third chromosome", ""),
+            ("State of the stock", "(example: 'healthy')"),
+            ("Helpful additional comments.", "")
+]
+
 class Collection(object):
     def __init__(self):
-        self.df
-        
+        self.df = 0
+        self.stocks = []
+
+    def add(self, newstock):
+        self.stocks.append(newstock)
 
     def __str__(self):
         return self.df

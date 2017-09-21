@@ -1,5 +1,10 @@
 import sys
 
+def query_val(question, help):
+    prompt = " "+help+" "
+    sys.stdout.write(question + prompt)
+    return input()
+
 def query_yn(question, default="no"):
     """Ask a yes/no question via raw_input() and return their answer.
 
