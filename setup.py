@@ -36,5 +36,5 @@ setup(
         "Programming Language :: Python :: 3.6",
     ],
     platforms=['Windows10Pro', 'MacOSX-ElCapitan'],
-    setup_requires=['numpy', 'pyyaml', 'pandas', 'scipy', 'gspread', 'oauth2client'],
+    setup_requires=['numpy', 'pyyaml', 'pandas', 'scipy', 'google-api-python-client', 'httplib2', 'oauth2client'],
 )

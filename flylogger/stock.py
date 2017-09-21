@@ -1,16 +1,13 @@
-import gspread
-
 class Collection(object):
     def __init__(self):
         self.df
+        
 
     def __str__(self):
         return self.df
 
-    def load_gspread(self):
-
 class Stock(object):
-    def __init__(self):
+    def __init__(self, data):
         self.stock_id = None
         self.stock_name = None
         self.tray_name = None
