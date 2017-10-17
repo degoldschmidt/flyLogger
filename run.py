@@ -1,8 +1,12 @@
-from flylogger import loadsheet
+from flylogger import authorize
 from flylogger import experiment
+from flylogger import load
+from flylogger import app
 
 def main():
-    mystocks = loadsheet.load_stocks()  ### collection object
+    my_client = authorize.me()
+    app.run()
+    #mystocks = loadef list_ssheets(self)d.stocks()  ### collection object
     #myexperiment = experiment.setup()   ### set up experiment object (CLI)
     #myexperiment.save()                 ### saves experimental yaml file to given location
 

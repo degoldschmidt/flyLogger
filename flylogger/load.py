@@ -94,7 +94,7 @@ def list_to_df(values):
                 df[key].append(val)
     return pd.DataFrame(df)
 
-def load_stocks(sheet=None, srange=None):
+def stocks(sheet=None, srange=None):
     if sheet is None:
         if os.path.exists(find_stocks()) and cli.query_yn("Found stocks file. Do you want to use it?", default='yes'):
             sheetid = yamlio.read_yaml(find_stocks())['id']
