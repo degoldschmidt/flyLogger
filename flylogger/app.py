@@ -1,28 +1,40 @@
 import tkinter as tk
+import pandastable as pdt
+import pandas as pd
 
 class MainApplication(tk.Frame):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent, client=None, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-
-        self.menubar = self.get_topmenu({   'Load stocks': self.open_sheet,
+        self.menubar = self.get_topmenu({   'File': [ ('Load spreadsheet', self.entry_id),
+                                                      ('Quit flyLogger', self.parent.quit) ],
                                             'Cross': [('New', None)],
                                             'Experiment': [('New', None)],
-                                            'Show': self.show,
                                             })
-
         try:
             self.parent.config(menu=self.menubar)
         except AttributeError:
             # master is a toplevel window (Python 1.4/Tkinter 1.63)
             self.parent.tk.call(master, "config", "-menu", self.menubar)
 
-        self.canvas = tk.Canvas(self, bg="white", width=400, height=400,
-                             bd=0, highlightthickness=0)
-        self.canvas.pack()
+        self.main = self.master
+        self.main.geometry('600x400+200+100')
+        f = tk.Frame(self.main)
+        f.pack(fill=tk.BOTH,expand=1)
+
+        #EMPTY TABLE
+        df = pd.DataFrame({'EMPTY' : ['NA']})
+        self.table = pt = pdt.Table(f, dataframe=df, showtoolbar=False, showstatusbar=True)
+        pt.show()
 
         ### data
+        self.client = client
         self.id = tk.StringVar() ## current spreadsheet id
+
+
+        return
+
+
 
     def get_topmenu(self, menu_dict):
         menubar = tk.Menu(self)
@@ -37,15 +49,25 @@ class MainApplication(tk.Frame):
 
         return menubar
 
-    def open_sheet(self):
-        window = tk.Tk()
-        window.title("Load Google sheets by name/id")
-        lbl = tk.Label(window, text='Please type in a name or id of your Google spreadsheet')
-        ent = tk.Entry(window, textvariable=self.id)
-        btn = tk.Button(window, text='Submit', command=window.destroy)
-        lbl.pack()
-        ent.pack()
-        btn.pack()
+    def entry_id(self):
+        global id_entry
+        self.window_entry = tk.Toplevel()   # Change to Toplevel (a popup) instead of a new Tk instance
+        self.window_entry.title('Load googlesheet by ID or name')
+        tk.Label(self.window_entry, text = 'Enter the google spreadsheet ID or name:').grid(sticky = tk.W, columnspan = 2)
+        id_entry = tk.Entry(self.window_entry, width = 55)
+        id_entry.grid(sticky = tk.W, columnspan = 2)
+        tk.Button(self.window_entry, text = 'Submit', command = self.submit_id).grid(row = 10, column = 0, sticky = tk.W + tk.E)
+        tk.Button(self.window_entry, text = 'Cancel', command = self.window_entry.destroy).grid(row = 10, column = 1, sticky = tk.W + tk.E)
+
+    def submit_id(self):
+        global id_entry
+        _ID = str(id_entry.get())
+        sht = self.client.open(_ID)
+        worksheet = sht.worksheet()
+        df = worksheet.get_as_df()
+        model = pdt.TableModel(dataframe=df)
+        self.table.updateModel(model)
+        self.window_entry.destroy()
 
     def show(self):
         print(self.id.get())
@@ -53,8 +75,8 @@ class MainApplication(tk.Frame):
     #def submit(self):
 
 
-def run():
+def run(client=None):
     root = tk.Tk()
-    MainApplication(root).pack(side="top", fill="both", expand=True)
+    MainApplication(root, client).pack(side="top", fill="both", expand=True)
     root.title("flyLogger 0.0.1")
     root.mainloop()

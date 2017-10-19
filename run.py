@@ -5,7 +5,7 @@ from flylogger import app
 
 def main():
     my_client = authorize.me()
-    app.run()
+    app.run(client=my_client)
     #mystocks = loadef list_ssheets(self)d.stocks()  ### collection object
     #myexperiment = experiment.setup()   ### set up experiment object (CLI)
     #myexperiment.save()                 ### saves experimental yaml file to given location

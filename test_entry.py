@@ -1,4 +1,4 @@
-from tkinter import *
+import tkinter as tk
 import os, shelve
 
 food_entry = None
@@ -17,10 +17,12 @@ def data_window():
 def check_data():
     global food_entry
     print(food_entry.get(1.0, END))
+    """
     if food_entry.get(1.0, END).strip() == '':
        print('Nothing Entered')
     else:
         print('Next Function')
+    """
 
 root = Tk()
 root.title('')
