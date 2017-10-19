@@ -22,7 +22,7 @@ class MainApplication(tk.Frame):
         self.canvas.pack()
 
         ### data
-        self.id = None ## current spreadsheet id
+        self.id = tk.StringVar() ## current spreadsheet id
 
     def get_topmenu(self, menu_dict):
         menubar = tk.Menu(self)
@@ -48,7 +48,10 @@ class MainApplication(tk.Frame):
         btn.pack()
 
     def show(self):
-        print(self.id)
+        print(self.id.get())
+
+    #def submit(self):
+
 
 def run():
     root = tk.Tk()
