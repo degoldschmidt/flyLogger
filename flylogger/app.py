@@ -1,12 +1,15 @@
 import tkinter as tk
 import pandastable as pdt
 import pandas as pd
+import json
+from pprint import pprint
+from tkinter.filedialog import askopenfilename
 
 class MainApplication(tk.Frame):
     def __init__(self, parent, client=None, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.menubar = self.get_topmenu({   'File': [ ('Open file', self.entry_id),
+        self.menubar = self.get_topmenu({   'File': [ ('Open file...', self.open_file),
                                                       ('Save as...', self.parent.quit),
                                                       ('Quit flyLogger', self.parent.quit)]
                                             })
@@ -22,18 +25,14 @@ class MainApplication(tk.Frame):
         f.pack(fill=tk.BOTH,expand=1)
 
         #EMPTY TABLE
-        df = pd.DataFrame({'EMPTY' : ['NA']})
-        self.table = pt = pdt.Table(f, dataframe=df, showtoolbar=False, showstatusbar=True)
+        df = pd.DataFrame({'' : []})
+        self.table = pt = pdt.Table(f, dataframe=df, showtoolbar=False, showstatusbar=False)
         pt.show()
 
         ### data
-        self.client = client
-        self.id = tk.StringVar() ## current spreadsheet id
-
-
+        #self.client = client
+        #self.id = tk.StringVar() ## current spreadsheet id
         return
-
-
 
     def get_topmenu(self, menu_dict):
         menubar = tk.Menu(self)
@@ -57,6 +56,19 @@ class MainApplication(tk.Frame):
         id_entry.grid(sticky = tk.W, columnspan = 2)
         tk.Button(self.window_entry, text = 'Submit', command = self.submit_id).grid(row = 10, column = 0, sticky = tk.W + tk.E)
         tk.Button(self.window_entry, text = 'Cancel', command = self.window_entry.destroy).grid(row = 10, column = 1, sticky = tk.W + tk.E)
+
+    def open_file(self):
+        filename = askopenfilename(title='Open experiment file', filetypes=[("JSON files","*.json"), ("Text files","*.txt"), ("YAML files","*.yaml")])
+        if filename.endswith('json'):
+            with open(filename) as f:
+                data = json.load(f)
+        elif filename.endswith('txt'):
+            with open(filename) as f:
+                d = dict(x.rstrip().split(None, 1) for x in f)
+        elif filename.endswith('yaml'):
+            with open(_file, 'r') as f:
+                data = yaml.load(f)
+        pprint(data)
 
     def submit_id(self):
         global id_entry
