@@ -6,10 +6,9 @@ class MainApplication(tk.Frame):
     def __init__(self, parent, client=None, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.menubar = self.get_topmenu({   'File': [ ('Load spreadsheet', self.entry_id),
-                                                      ('Quit flyLogger', self.parent.quit) ],
-                                            'Cross': [('New', None)],
-                                            'Experiment': [('New', None)],
+        self.menubar = self.get_topmenu({   'File': [ ('Open file', self.entry_id),
+                                                      ('Save as...', self.parent.quit),
+                                                      ('Quit flyLogger', self.parent.quit)]
                                             })
         try:
             self.parent.config(menu=self.menubar)
@@ -71,8 +70,6 @@ class MainApplication(tk.Frame):
 
     def show(self):
         print(self.id.get())
-
-    #def submit(self):
 
 
 def run(client=None):
