@@ -16,25 +16,29 @@ else:
     LONG_DESCRIPTION = open('README.rst').read()
 
 setup(
-    name="flyLogger",
-    version="0.0.1",
+    name="flylogger",
+    version="1.0",
     author="Dennis Goldschmidt",
     author_email="dennis.goldschmidt@neuro.fchampalimaud.org",
     description=("Logging API for fly experiments: from stocks to experimental metadata fully automated."),
     license="GPLv3",
-    keywords=['metadata', 'fly', 'experiments'],
-    url="https://pypi.python.org/pypi/pytrack-analysis",
+    keywords=['tracking', 'data analysis', 'fly'],
+    url="https://pypi.python.org/pypi/pytrack",
     packages=['flylogger'],
     python_requires='>=3.6',
-    long_description=LONG_DESCRIPTION,
+    long_description=read('README.md'),
     classifiers=[
         "Development Status :: 1 - Planning",
         "Operating System :: MacOS :: MacOS X",
         "Topic :: Utilities",
-        "Topic :: Scientific/Engineering :: Visualization",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Programming Language :: Python :: 3.6",
     ],
-    platforms=['Windows10Pro', 'MacOSX-ElCapitan'],
-    setup_requires=['numpy', 'pyyaml', 'pandas', 'scipy', 'google-api-python-client', 'httplib2', 'oauth2client', 'pygsheets', 'pandastable'],
+    platforms=['Windows10Pro', 'MacOSX-HighSierra'],
+    setup_requires=['numpy', 'pyyaml', 'pandas', 'scipy', 'matplotlib', 'seaborn', 'google-api-python-client', 'httplib2', 'gspread', 'oauth2client', 'PyOpenSSL', 'pygsheets', 'pandastable'],
+    entry_points={
+        'gui_scripts': [
+            'flylogger = flylogger.main:main',
+        ],
+    },
 )
